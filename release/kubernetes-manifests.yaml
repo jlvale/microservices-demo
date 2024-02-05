@@ -525,9 +525,6 @@ spec:
         tags.datadoghq.com/env: prod
         tags.datadoghq.com/service: cartservice
         tags.datadoghq.com/version: "0.9"
-        admission.datadoghq.com/enabled: "true"
-      annotations:
-        admission.datadoghq.com/dotnet-lib.version: v2.46.0
     spec:
       serviceAccountName: default
       terminationGracePeriodSeconds: 5
@@ -549,8 +546,6 @@ spec:
         ports:
         - containerPort: 7070
         env:
-        - name: DD_LOGS_INJECTION
-          value: "true"
         - name: REDIS_ADDR
           value: "redis-cart:6379"
         resources:
