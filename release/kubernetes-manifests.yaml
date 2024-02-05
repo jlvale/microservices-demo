@@ -39,7 +39,7 @@ spec:
         admission.datadoghq.com/enabled: "true"
         app: emailservice
       annotations:
-        admission.datadoghq.com/python-lib.version: v2.5.2  
+        admission.datadoghq.com/python-lib.version: v2.5.1 
     spec:
       serviceAccountName: default
       terminationGracePeriodSeconds: 5
@@ -192,7 +192,7 @@ spec:
         tags.datadoghq.com/version: "0.9"
         admission.datadoghq.com/enabled: "true"
       annotations:
-        admission.datadoghq.com/python-lib.version: v2.5.2
+        admission.datadoghq.com/python-lib.version: v2.5.1
     spec:
       serviceAccountName: default
       terminationGracePeriodSeconds: 5
@@ -580,8 +580,6 @@ spec:
           value: "true"
         - name: DD_IAST_ENABLED
           value: "true"
-        - name: DD_RUNTIME_METRICS_ENABLED
-          value: "true"
         - name: REDIS_ADDR
           value: "redis-cart:6379"
         resources:
@@ -636,7 +634,7 @@ spec:
         tags.datadoghq.com/version: "0.9"
         admission.datadoghq.com/enabled: "true"
       annotations:
-        admission.datadoghq.com/python-lib.version: v2.5.2
+        admission.datadoghq.com/python-lib.version: v2.5.1
         sidecar.istio.io/rewriteAppHTTPProbers: "true"
     spec:
       serviceAccountName: default
