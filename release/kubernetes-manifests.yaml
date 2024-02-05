@@ -22,6 +22,10 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: emailservice
+  labels:
+    tags.datadoghq.com/env: prod
+    tags.datadoghq.com/service: emailservice
+    tags.datadoghq.com/version: "0.9"
 spec:
   selector:
     matchLabels:
@@ -29,7 +33,13 @@ spec:
   template:
     metadata:
       labels:
+        tags.datadoghq.com/env: prod
+        tags.datadoghq.com/service: emailservice
+        tags.datadoghq.com/version: "0.9"
+        admission.datadoghq.com/enabled: "true"
         app: emailservice
+      annotations:
+        admission.datadoghq.com/python-lib.version: v2.5.2  
     spec:
       serviceAccountName: default
       terminationGracePeriodSeconds: 5
@@ -51,6 +61,10 @@ spec:
         ports:
         - containerPort: 8080
         env:
+        - name: DD_PROFILING_ENABLED
+          value: "true"
+        - name: DD_LOGS_INJECTION
+          value: "true"
         - name: PORT
           value: "8080"
         - name: DISABLE_PROFILER
@@ -161,6 +175,10 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: recommendationservice
+  labels:
+    tags.datadoghq.com/env: prod
+    tags.datadoghq.com/service: recommendationservice
+    tags.datadoghq.com/version: "0.9"
 spec:
   selector:
     matchLabels:
@@ -169,6 +187,12 @@ spec:
     metadata:
       labels:
         app: recommendationservice
+        tags.datadoghq.com/env: prod
+        tags.datadoghq.com/service: recommendationservice
+        tags.datadoghq.com/version: "0.9"
+        admission.datadoghq.com/enabled: "true"
+      annotations:
+        admission.datadoghq.com/python-lib.version: v2.5.2
     spec:
       serviceAccountName: default
       terminationGracePeriodSeconds: 5
@@ -198,6 +222,10 @@ spec:
           grpc:
             port: 8080
         env:
+        - name: DD_PROFILING_ENABLED
+          value: "true"
+        - name: DD_LOGS_INJECTION
+          value: "true"
         - name: PORT
           value: "8080"
         - name: PRODUCT_CATALOG_SERVICE_ADDR
@@ -342,6 +370,10 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: paymentservice
+  labels:
+    tags.datadoghq.com/env: prod
+    tags.datadoghq.com/service: paymentservice
+    tags.datadoghq.com/version: "0.9"
 spec:
   selector:
     matchLabels:
@@ -350,6 +382,12 @@ spec:
     metadata:
       labels:
         app: paymentservice
+        tags.datadoghq.com/env: prod
+        tags.datadoghq.com/service: paymentservice
+        tags.datadoghq.com/version: "0.9"
+        admission.datadoghq.com/enabled: "true"
+      annotations:
+        admission.datadoghq.com/js-lib.version: v4.26.0
     spec:
       serviceAccountName: default
       terminationGracePeriodSeconds: 5
@@ -371,6 +409,14 @@ spec:
         ports:
         - containerPort: 50051
         env:
+        - name: DD_AGENT_HOST
+          valueFrom:
+            fieldRef:
+              fieldPath: status.hostIP
+        - name: DD_PROFILING_ENABLED
+          value: "true"
+        - name: DD_LOGS_INJECTION
+          value: "true"
         - name: PORT
           value: "50051"
         - name: DISABLE_PROFILER
@@ -470,6 +516,10 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: cartservice
+  labels:
+    tags.datadoghq.com/env: prod
+    tags.datadoghq.com/service: cartservice
+    tags.datadoghq.com/version: "0.9"
 spec:
   selector:
     matchLabels:
@@ -478,6 +528,12 @@ spec:
     metadata:
       labels:
         app: cartservice
+        tags.datadoghq.com/env: prod
+        tags.datadoghq.com/service: cartservice
+        tags.datadoghq.com/version: "0.9"
+        admission.datadoghq.com/enabled: "true"
+      annotations:
+        admission.datadoghq.com/dotnet-lib.version: v2.46.0
     spec:
       serviceAccountName: default
       terminationGracePeriodSeconds: 5
@@ -499,6 +555,14 @@ spec:
         ports:
         - containerPort: 7070
         env:
+        - name: DD_LOGS_INJECTION
+          value: "true"
+        - name: DD_APPSEC_ENABLED
+          value: "true"
+        - name: DD_IAST_ENABLED
+          value: "true"
+        - name: DD_RUNTIME_METRICS_ENABLED
+          value: "true"
         - name: REDIS_ADDR
           value: "redis-cart:6379"
         resources:
@@ -535,6 +599,10 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: loadgenerator
+  labels:
+    tags.datadoghq.com/env: prod
+    tags.datadoghq.com/service: loadgenerator
+    tags.datadoghq.com/version: "0.9"
 spec:
   selector:
     matchLabels:
@@ -544,7 +612,12 @@ spec:
     metadata:
       labels:
         app: loadgenerator
+        tags.datadoghq.com/env: prod
+        tags.datadoghq.com/service: loadgenerator
+        tags.datadoghq.com/version: "0.9"
+        admission.datadoghq.com/enabled: "true"
       annotations:
+        admission.datadoghq.com/python-lib.version: v2.5.2
         sidecar.istio.io/rewriteAppHTTPProbers: "true"
     spec:
       serviceAccountName: default
@@ -589,6 +662,10 @@ spec:
           readOnlyRootFilesystem: true
         image: gcr.io/google-samples/microservices-demo/loadgenerator:v0.9.0
         env:
+        - name: DD_PROFILING_ENABLED
+          value: "true"
+        - name: DD_LOGS_INJECTION
+          value: "true"
         - name: FRONTEND_ADDR
           value: "frontend:80"
         - name: USERS
@@ -605,6 +682,11 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: currencyservice
+  labels:
+    app: currencyservice
+    tags.datadoghq.com/env: prod
+    tags.datadoghq.com/service: paymentservice
+    tags.datadoghq.com/version: "0.9"
 spec:
   selector:
     matchLabels:
@@ -613,6 +695,12 @@ spec:
     metadata:
       labels:
         app: currencyservice
+        tags.datadoghq.com/env: prod
+        tags.datadoghq.com/service: paymentservice
+        tags.datadoghq.com/version: "0.9"
+        admission.datadoghq.com/enabled: "true"
+      annotations:
+        admission.datadoghq.com/js-lib.version: v4.26.0
     spec:
       serviceAccountName: default
       terminationGracePeriodSeconds: 5
@@ -635,6 +723,14 @@ spec:
         - name: grpc
           containerPort: 7000
         env:
+        - name: DD_AGENT_HOST
+          valueFrom:
+            fieldRef:
+              fieldPath: status.hostIP
+        - name: DD_PROFILING_ENABLED
+          value: "true"
+        - name: DD_LOGS_INJECTION
+          value: "true"
         - name: PORT
           value: "7000"
         - name: DISABLE_PROFILER
@@ -799,6 +895,10 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: adservice
+  labels:
+    tags.datadoghq.com/env: prod
+    tags.datadoghq.com/service: adservice
+    tags.datadoghq.com/version: "0.9"
 spec:
   selector:
     matchLabels:
@@ -807,6 +907,12 @@ spec:
     metadata:
       labels:
         app: adservice
+        tags.datadoghq.com/env: prod
+        tags.datadoghq.com/service: adservice
+        tags.datadoghq.com/version: "0.9"
+        admission.datadoghq.com/enabled: "true"
+      annotations:
+        admission.datadoghq.com/java-lib.version: v1.28.0
     spec:
       serviceAccountName: default
       terminationGracePeriodSeconds: 5
@@ -828,6 +934,14 @@ spec:
         ports:
         - containerPort: 9555
         env:
+        - name: DD_PROFILING_ENABLED
+          value: "true"
+        - name: DD_LOGS_INJECTION
+          value: "true"
+        - name: DD_APPSEC_ENABLED
+          value: "true"
+        - name: DD_IAST_ENABLED
+          value: "true"
         - name: PORT
           value: "9555"
         resources:
