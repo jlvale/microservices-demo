@@ -551,10 +551,6 @@ spec:
         env:
         - name: DD_LOGS_INJECTION
           value: "true"
-        - name: DD_APPSEC_ENABLED
-          value: "true"
-        - name: DD_IAST_ENABLED
-          value: "true"
         - name: REDIS_ADDR
           value: "redis-cart:6379"
         resources:
