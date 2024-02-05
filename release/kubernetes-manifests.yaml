@@ -360,7 +360,7 @@ spec:
   ports:
   - name: http
     nodePort: 30030
-    targetPort: 8080
+    port: 8080
 ---
 apiVersion: apps/v1
 kind: Deployment
